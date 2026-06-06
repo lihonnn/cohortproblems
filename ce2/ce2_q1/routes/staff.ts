@@ -7,13 +7,20 @@ const router: Router = express.Router();
 
 /* insert a staff, should have used POST instead of GET */
 router.get('/add/:id/:name/:code', async function(req: Request, res: Response, next: NextFunction) {
-    res.send(`TODO`); // TODO: Fixme
+    const id = req.params.id;
+    const name = req.params.name;
+    const code = req.params.code;
+    const staff = new staffmodel.Staff(id, name, code);
+
+    await staffmodel.insertMany( [staff]);
+    res.send(`${JSON.stringify(staff)}`);
 });
 
 /* GET staff listing. */
 
 router.get('/all/', async function(req: Request, res: Response, next: NextFunction) {
-    res.send(`TODO`); // TODO: Fixme
+    const all = await staffmodel.all();
+    res.send(`${JSON.stringify([all])}`); // TODO: Fixme
 });
 
 

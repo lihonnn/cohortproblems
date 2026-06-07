@@ -17,12 +17,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use('/dept', deptRouter);
+app.use('/dept', deptRouter);   // assign a router for routes/dept.ts, 
+                                // this router will be assigned to listen to count
 
-sync();
+sync(); // check for Staff, Dept and Work tables on startup, create missing tables if not available
 
-process.on('SIGINT', db.cleanup);
-process.on('SIGTERM', db.cleanup);
+process.on('SIGINT', db.cleanup); // handle interrupt 
+process.on('SIGTERM', db.cleanup); // handle termination 
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     next(createError(404));
